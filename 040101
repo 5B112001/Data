@@ -1,0 +1,29 @@
+int ledPin = 22; // 設定第一個LED的腳位為22
+int currentLed = 0; // 目前亮燈的編號
+bool reverse = false; // 是否反向循環
+
+void setup() {
+  for (int i = 0; i < 8; i++) { // 設定8個LED腳位為輸出模式
+    pinMode(ledPin + i, OUTPUT);
+  }
+}
+
+void loop() {
+  digitalWrite(ledPin + currentLed, HIGH); // 亮燈
+  delay(100); // 等待500毫秒
+  digitalWrite(ledPin + currentLed, LOW); // 熄燈
+
+  if (!reverse) { // 如果不是反向循環
+    currentLed++; // 編號加一
+    if (currentLed == 8) { // 如果編號超過7，改為反向循環
+      reverse = true;
+      currentLed = 6; // 跳過最後一顆燈，從倒數第二顆燈開始反向循環
+    }
+  } else { // 如果是反向循環
+    currentLed--; // 編號減一
+    if (currentLed == -1) { // 如果編號小於0，改為正向循環
+      reverse = false;
+      currentLed = 1; // 跳過第一顆燈，從第二顆燈開始正向循環
+    }
+  }
+}
